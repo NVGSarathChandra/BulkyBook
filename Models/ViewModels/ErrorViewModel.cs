@@ -1,6 +1,6 @@
 using System;
 
-namespace Bulky_Book_Project.Models
+namespace Bulky_Book_Project.Models.ViewModels
 {
     public class ErrorViewModel
     {
