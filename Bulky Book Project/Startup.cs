@@ -12,6 +12,8 @@ using Bulky_Book_Project.Dataaccess.data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using DataAccess.IServiceContracts;
+using DataAccess.Repositories;
 
 namespace Bulky_Book_Project
 {
@@ -30,12 +32,17 @@ namespace Bulky_Book_Project
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("SqlConnectionString")));
+
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWorkRepository>();
+
             services.AddControllersWithViews();
+
             services.AddRazorPages().AddRazorRuntimeCompilation();
-            
-            
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

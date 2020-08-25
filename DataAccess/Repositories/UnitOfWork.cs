@@ -1,0 +1,31 @@
+﻿using Bulky_Book_Project.Dataaccess.data;
+using DataAccess.IServiceContracts;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DataAccess.Repositories
+{
+   public class UnitOfWorkRepository : IUnitOfWork
+    {
+        private readonly ApplicationDbContext dbContext;
+        public ICategory category { get; private set; }
+        public IStoredProcedureCall storedProcedureCall { get; private set; }
+
+        public UnitOfWorkRepository(ApplicationDbContext _dbContext)
+        {
+            this.dbContext = _dbContext;
+            category = new CategoryRepository(dbContext);
+            storedProcedureCall = new StoredProcedureCallRepository(dbContext);
+        }
+
+        public void Dispose()
+        {
+            dbContext.Dispose();
+        }
+        public void Save()
+        {
+            dbContext.SaveChanges();
+        }
+    }
+}
