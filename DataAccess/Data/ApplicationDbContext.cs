@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Models;
 
 namespace Bulky_Book_Project.Dataaccess.data
 {
@@ -12,5 +13,6 @@ namespace Bulky_Book_Project.Dataaccess.data
             : base(options)
         {
         }
+        public DbSet<Category> categories{ get; set; }
     }
 }
