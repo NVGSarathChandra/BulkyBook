@@ -23,13 +23,12 @@ namespace DataAccess.Repositories
         public T Get(int id)
         {
             return dbSet.Find(id);
-
         }
 
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
         {
             IQueryable<T> query = dbSet;
-            if (query != null)
+            if (filter != null)
             {
                 query = query.Where(filter);
             }
