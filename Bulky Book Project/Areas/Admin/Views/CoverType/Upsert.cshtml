@@ -1,21 +1,18 @@
-﻿@model Models.Category
+﻿@model Models.CoverType
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    var title = "Create Category";
+    var title = "Create Cover Type";
 }
 
 <h1>Upsert</h1>
 
-
 <form method="post">
-   
+
     <div class="row p-3 border">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        @if (Model.CategoryId != 0)
+        @if (Model.CoverTypeId != 0)
         {
             //EDIT CATEGORY
-            title = "Edit Category";
-            <input type="hidden" asp-for="CategoryId" />
+            title = "Edit Cover Type";
         }
         <div class="col-12 border-bottom">
             <h2 class="text-primary">@title</h2>
@@ -23,18 +20,18 @@
         <div class="col-8 pt-4">
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="CategoryName"></label>
+                    <label asp-for="CoverTypeName"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="CategoryName" class="form-control" />
-                    <span asp-validation-for="CategoryName" class="text-danger"></span>
+                    <input asp-for="CoverTypeName" class="form-control" />
+                    <span asp-validation-for="CoverTypeName" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-8 offset-4">
-                    @if (Model.CategoryId != 0)
+                    @if (Model.CoverTypeId != 0)
                     {
-                        <partial name="_EditAndBackToListButton" model="Model.CategoryId" />
+                        <partial name="_EditAndBackToListButton" model="Model.CoverTypeId" />
                     }
                     else
                     {
@@ -45,6 +42,7 @@
         </div>
     </div>
 </form>
+
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
 }

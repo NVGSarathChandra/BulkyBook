@@ -13,7 +13,7 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
-        // ApplicationDbContext applicationDb;
+       
         public CategoryController(IUnitOfWork _applicationDb)
         {
             unitOfWork = _applicationDb;

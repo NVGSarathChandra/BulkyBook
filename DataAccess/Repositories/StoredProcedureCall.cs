@@ -21,7 +21,7 @@ namespace DataAccess.Repositories
             connectionString = dbContext.Database.GetDbConnection().ConnectionString;
         }
 
-        public T Single<T>(string procedureName, DynamicParameters param = null)
+        public T Single<T>(string procedureName, DynamicParameters param = null)        //Returns single scalar value
         {
             SqlConnection sqlCon = new SqlConnection(connectionString);
             sqlCon.Open();
@@ -36,7 +36,7 @@ namespace DataAccess.Repositories
             sqlCon.Execute(procedureName, param, commandType:CommandType.StoredProcedure);
         }
 
-        public T singleRecord<T>(string procedureName, DynamicParameters param = null)
+        public T singleRecord<T>(string procedureName, DynamicParameters param = null)          //Retrieves single entity
         {
             SqlConnection sqlCon = new SqlConnection(connectionString);
             sqlCon.Open();

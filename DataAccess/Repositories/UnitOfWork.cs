@@ -6,17 +6,22 @@ using System.Text;
 
 namespace DataAccess.Repositories
 {
-   public class UnitOfWorkRepository : IUnitOfWork
+    public class UnitOfWorkRepository : IUnitOfWork
     {
         private readonly ApplicationDbContext dbContext;
+
         public ICategory category { get; private set; }
+
         public IStoredProcedureCall storedProcedureCall { get; private set; }
+
+        public ICoverType coverType { get; private set; }
 
         public UnitOfWorkRepository(ApplicationDbContext _dbContext)
         {
             this.dbContext = _dbContext;
             category = new CategoryRepository(dbContext);
             storedProcedureCall = new StoredProcedureCallRepository(dbContext);
+            coverType = new CoverTypeRepository(dbContext);
         }
 
         public void Dispose()
