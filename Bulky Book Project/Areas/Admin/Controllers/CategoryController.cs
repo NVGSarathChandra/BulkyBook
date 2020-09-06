@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Bulky_Book_Project.Dataaccess.data;
+using Dapper;
 using DataAccess.IServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using Utilities;
 
 namespace Bulky_Book_Project.Areas.Admin.Controllers
 {
@@ -79,6 +81,8 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
             unitOfWork.Save();
             return Json(new { success = true, message = "Delete Successful" });
         }
+
+      
         #endregion
     }
 }

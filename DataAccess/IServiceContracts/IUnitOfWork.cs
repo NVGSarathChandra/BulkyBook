@@ -8,8 +8,11 @@ namespace DataAccess.IServiceContracts
     {
         ICategory category { get; }
         IStoredProcedureCall storedProcedureCall { get; }
-        void Save();
         ICoverType coverType { get; }
+
+        IProduct product { get; }
+
+        void Save();
     }
 }
   

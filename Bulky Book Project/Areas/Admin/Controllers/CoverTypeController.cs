@@ -90,7 +90,7 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
         {
             var parameters = new DynamicParameters();
             parameters.Add("@id", id);
-            var dataFromDb = unitOfWork.storedProcedureCall.singleRecord<CoverType>(StaticDetails.SP_DELETECOVERTYPE, parameters);
+            var dataFromDb = unitOfWork.storedProcedureCall.singleRecord<CoverType>(StaticDetails.SP_GETCOVERTYPE, parameters);
             if (dataFromDb == null)
             {
                 return Json(new { success = false, message = "Unable to Delete Cover Type" });

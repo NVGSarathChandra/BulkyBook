@@ -1,5 +1,6 @@
 ﻿using Bulky_Book_Project.Dataaccess.data;
 using DataAccess.IServiceContracts;
+using Bulky_Book_Project.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

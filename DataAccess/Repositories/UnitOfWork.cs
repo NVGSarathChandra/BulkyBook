@@ -15,6 +15,8 @@ namespace DataAccess.Repositories
         public IStoredProcedureCall storedProcedureCall { get; private set; }
 
         public ICoverType coverType { get; private set; }
+        public IProduct product { get; private set; }
+
 
         public UnitOfWorkRepository(ApplicationDbContext _dbContext)
         {
@@ -22,6 +24,7 @@ namespace DataAccess.Repositories
             category = new CategoryRepository(dbContext);
             storedProcedureCall = new StoredProcedureCallRepository(dbContext);
             coverType = new CoverTypeRepository(dbContext);
+            product = new ProductRepository(dbContext);
         }
 
         public void Dispose()

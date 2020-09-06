@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200828113214_AddCovertypeToDB")]
-    partial class AddCovertypeToDB
+    [Migration("20200831171205_AddProductToDB")]
+    partial class AddProductToDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -255,6 +255,55 @@ namespace DataAccess.Migrations
                     b.ToTable("coverTypes");
                 });
 
+            modelBuilder.Entity("Models.Product", b =>
+                {
+                    b.Property<int>("ProductID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CoverTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageURL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("ListPrice")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Price100")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Price50")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ProductAuthor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductISBN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProductID");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CoverTypeId");
+
+                    b.ToTable("Products");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -302,6 +351,21 @@ namespace DataAccess.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Models.Product", b =>
+                {
+                    b.HasOne("Models.Category", "category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.CoverType", "coverType")
+                        .WithMany()
+                        .HasForeignKey("CoverTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
