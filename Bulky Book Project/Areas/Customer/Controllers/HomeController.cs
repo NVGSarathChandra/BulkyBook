@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Bulky_Book_Project.Models.ViewModels;
+using DataAccess.IServiceContracts;
+using Models;
+using Models.ViewModels;
 
 namespace Bulky_Book_Project.Areas.Customer.Controllers
 {
@@ -13,15 +16,27 @@ namespace Bulky_Book_Project.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IUnitOfWork unitOfWork;
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork _unitOfWork)
         {
             _logger = logger;
+            unitOfWork = _unitOfWork;
         }
 
         public IActionResult Index()
         {
-            return View();
+            List<Product> product = unitOfWork.product.GetAll().ToList();
+            List<Category> category = unitOfWork.category.GetAll().ToList();
+            List<CoverType> coverType = unitOfWork.coverType.GetAll().ToList();
+
+            IEnumerable<Product> productList = from p in product
+                                               join c in category on p.CategoryId equals c.CategoryId into table1
+                                               from c in table1.ToList()
+                                               join ct in coverType on p.CoverTypeId equals ct.CoverTypeId into table2
+                                               from ct in table2.ToList()
+                                               select p;
+
+            return View(productList);
         }
 
         public IActionResult Privacy()
