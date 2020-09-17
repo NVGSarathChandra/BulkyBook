@@ -18,7 +18,7 @@ namespace DataAccess.Repositories
 
         public void Update(Category category)
         {
-            var objFromDB = dbContext.categories.FirstOrDefault(s => s.CategoryId == category.CategoryId);
+            var objFromDB = dbContext.Categories.FirstOrDefault(s => s.CategoryId == category.CategoryId);
             if (objFromDB != null)
             {
                 objFromDB.CategoryName = category.CategoryName;

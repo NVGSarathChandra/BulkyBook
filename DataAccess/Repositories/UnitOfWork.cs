@@ -17,6 +17,9 @@ namespace DataAccess.Repositories
         public ICoverType coverType { get; private set; }
         public IProduct product { get; private set; }
 
+        public IOrganization organization { get; set; }
+        public IApplicationUser applicationUser { get; set; }
+
 
         public UnitOfWorkRepository(ApplicationDbContext _dbContext)
         {
@@ -25,6 +28,8 @@ namespace DataAccess.Repositories
             storedProcedureCall = new StoredProcedureCallRepository(dbContext);
             coverType = new CoverTypeRepository(dbContext);
             product = new ProductRepository(dbContext);
+            organization = new OrganizationRepository(dbContext);
+            applicationUser = new ApplicationUserRepository(dbContext);
         }
 
         public void Dispose()

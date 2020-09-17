@@ -21,7 +21,7 @@ namespace DataAccess.Repositories
        
         public void Update(CoverType coverType)
         {
-            var objFromDB = dbContext.coverTypes.FirstOrDefault(s => s.CoverTypeId == coverType.CoverTypeId);
+            var objFromDB = dbContext.CoverTypes.FirstOrDefault(s => s.CoverTypeId == coverType.CoverTypeId);
             if (objFromDB != null)
             {
                 objFromDB.CoverTypeName = coverType.CoverTypeName;

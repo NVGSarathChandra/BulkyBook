@@ -14,9 +14,11 @@ namespace Bulky_Book_Project.Dataaccess.data
             : base(options)
         {
         }
-        public DbSet<Category> categories{ get; set; }
-        public DbSet<CoverType> coverTypes { get; set; }
-
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<CoverType> CoverTypes { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+        public DbSet<Organization> Organizations { get; set; }
     }
 }

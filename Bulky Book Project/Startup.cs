@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DataAccess.IServiceContracts;
 using DataAccess.Repositories;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Utilities;
 
 namespace Bulky_Book_Project
 {
@@ -32,8 +34,8 @@ namespace Bulky_Book_Project
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("SqlConnectionString")));
-
-            services.AddDefaultIdentity<IdentityUser>()
+                
+            services.AddIdentity<IdentityUser,IdentityRole>().AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IUnitOfWork, UnitOfWorkRepository>();
@@ -42,6 +44,7 @@ namespace Bulky_Book_Project
 
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
+            services.AddSingleton<IEmailSender, EmailSender>();
 
         }
 

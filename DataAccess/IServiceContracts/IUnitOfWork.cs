@@ -9,10 +9,9 @@ namespace DataAccess.IServiceContracts
         ICategory category { get; }
         IStoredProcedureCall storedProcedureCall { get; }
         ICoverType coverType { get; }
-
         IProduct product { get; }
-
+        IOrganization organization { get; }
+        IApplicationUser applicationUser { get; }
         void Save();
     }
 }
-  
