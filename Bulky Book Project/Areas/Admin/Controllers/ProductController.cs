@@ -12,10 +12,12 @@ using Models.ViewModels;
 using Utilities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bulky_Book_Project.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = StaticDetails.AdminRole)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork unitOfWork;

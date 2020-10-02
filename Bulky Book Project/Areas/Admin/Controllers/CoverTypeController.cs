@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using DataAccess.IServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -12,6 +13,7 @@ using Utilities;
 namespace Bulky_Book_Project.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = StaticDetails.AdminRole)]
     public class CoverTypeController : Controller
     {
         private readonly IUnitOfWork unitOfWork;

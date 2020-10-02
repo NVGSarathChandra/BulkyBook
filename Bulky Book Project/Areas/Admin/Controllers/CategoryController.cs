@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Bulky_Book_Project.Dataaccess.data;
 using Dapper;
 using DataAccess.IServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Utilities;
@@ -12,6 +13,7 @@ using Utilities;
 namespace Bulky_Book_Project.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles =StaticDetails.AdminRole)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork unitOfWork;

@@ -46,6 +46,24 @@ namespace Bulky_Book_Project
 
             services.AddSingleton<IEmailSender, EmailSender>();
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";   
+            });
+            services.AddAuthentication().AddFacebook(options =>
+            {
+                options.AppSecret = "78281f8382a4d6b02af02f728db36784";
+                options.AppId = "954578668367297";
+            });
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = "995622560488-l19tm6qarge4mnv4hu8q5er2lt6d93dt.apps.googleusercontent.com";
+                options.ClientSecret = "W38oj7kHbfM_yKf9wm2BrKsk";
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
