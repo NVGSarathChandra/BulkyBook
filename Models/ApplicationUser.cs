@@ -18,7 +18,7 @@ namespace Models
 
         public int? OrganizatioinId { get; set; }
         [ForeignKey("OrganizatioinId")]
-        public Organization organization { get; set; }
+        public Organization Organization { get; set; }
 
 
         [NotMapped]
