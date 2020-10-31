@@ -34,8 +34,8 @@ namespace Bulky_Book_Project
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("SqlConnectionString")));
-                
-            services.AddIdentity<IdentityUser,IdentityRole>().AddDefaultTokenProviders()
+
+            services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IUnitOfWork, UnitOfWorkRepository>();
@@ -45,24 +45,26 @@ namespace Bulky_Book_Project
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.Configure<EmailOptions>(Configuration);
 
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = $"/Identity/Account/Login";
                 options.LogoutPath = $"/Identity/Account/Logout";
-                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";   
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
             services.AddAuthentication().AddFacebook(options =>
             {
-                options.AppSecret = "78281f8382a4d6b02af02f728db36784";
-                options.AppId = "954578668367297";
+                //Get values from appSettings.son file Process 1
+                options.AppSecret = Configuration.GetSection("Data").GetSection("FacebookAppSecret").Value;
+                options.AppId = Configuration.GetSection("Data").GetSection("FacebookAppId").Value;
             });
             services.AddAuthentication().AddGoogle(options =>
             {
-                options.ClientId = "995622560488-l19tm6qarge4mnv4hu8q5er2lt6d93dt.apps.googleusercontent.com";
-                options.ClientSecret = "W38oj7kHbfM_yKf9wm2BrKsk";
+                //Get values from appSettings.json file Process 2
+                options.ClientId = Configuration.GetValue<string>("Data:GoogleClientId");
+                options.ClientSecret = Configuration.GetValue<string>("Data:GoogleClientSecret");
             });
-
 
         }
 

@@ -15,6 +15,8 @@ namespace Models
         public string City { get; set; }
         public string State { get; set; }
         public string PostalCode { get; set; }
+        //[Required(ErrorMessage ="Username is required")]
+        //public override string UserName { get => base.UserName; set => base.UserName = value; }
 
         public int? OrganizatioinId { get; set; }
         [ForeignKey("OrganizatioinId")]

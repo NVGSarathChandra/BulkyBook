@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-Bulky_Book_Project-696325F5-A53F-4E82-99EC-3196ED796C56</UserSecretsId>
     <RootNamespace>Bulky_Book_Project</RootNamespace>
+    <StartupObject>Bulky_Book_Project.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
