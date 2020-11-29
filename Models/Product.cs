@@ -43,7 +43,7 @@ namespace Models
         public int CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]
-        public Category category { get; set; }
+        public Category Category { get; set; }
 
         #endregion
 
@@ -53,7 +53,7 @@ namespace Models
         public int CoverTypeId { get; set; }
 
         [ForeignKey("CoverTypeId")]
-        public CoverType coverType { get; set; }
+        public CoverType CoverType { get; set; }
 
         #endregion
 

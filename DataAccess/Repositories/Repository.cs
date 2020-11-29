@@ -28,39 +28,50 @@ namespace DataAccess.Repositories
 
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
         {
+            try
+            {
+                IQueryable<T> query = dbSet;
+                if (filter != null)
+                {
+                    query = query.Where(filter);
+                }
+                if (includeProperties != null)
+                {
+                    foreach (var item in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        query = query.Include(item);
+                    }
+                }
+                if (orderBy != null)
+                {
+                    return orderBy(query).ToList();
+                }
+                return query.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public T GetFirstOrDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null)
+        {
             IQueryable<T> query = dbSet;
+
             if (filter != null)
             {
                 query = query.Where(filter);
             }
-            if (includeProperties != null)
-            {
-                foreach (var item in includeProperties.Split(new char[]{ ','},StringSplitOptions.RemoveEmptyEntries))
-                {
-                    query = query.Include(item);
-                }
-            }
-            if (orderBy != null)
-            {
-                return orderBy(query).ToList();
-            }
-            return query.ToList();
-        }
 
-        public T GetFirstOrDefault(Expression<Func<T, bool>> expression = null, string includeProperties = null)
-        {
-            IQueryable<T> query = dbSet;
-            if (expression != null)
-            {
-                query = query.Where(expression);
-            }
             if (includeProperties != null)
             {
-                foreach (var item in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    query = query.Include(item);
+                    query = query.Include(includeProp);
                 }
             }
+
+
             return query.FirstOrDefault();
         }
 

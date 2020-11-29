@@ -33,7 +33,7 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
             {
                 return View(organization);
             }
-            organization = unitOfWork.organization.GetFirstOrDefault(s => s.OrganizationId == id);
+            organization = unitOfWork.Organization.GetFirstOrDefault(s => s.OrganizationId == id);
             if (organization == null)
             {
                 return NotFound();
@@ -44,7 +44,7 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetOrganizations()
         {
-            var result = unitOfWork.organization.GetAll();
+            var result = unitOfWork.Organization.GetAll();
             return Json(new { data = result });
         }
 
@@ -56,11 +56,11 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
             {
                 if (organization.OrganizationId != 0)
                 {
-                    unitOfWork.organization.Update(organization);
+                    unitOfWork.Organization.Update(organization);
                 }
                 else
                 {
-                    unitOfWork.organization.Add(organization);
+                    unitOfWork.Organization.Add(organization);
                 }
                 unitOfWork.Save();
                 return RedirectToAction(nameof(Index));
@@ -72,12 +72,12 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
         [HttpDelete]
         public IActionResult DeleteOrganization(int id)
         {
-            var dataFromDb = unitOfWork.organization.Get(id);
+            var dataFromDb = unitOfWork.Organization.Get(id);
             if (dataFromDb == null)
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
-            unitOfWork.organization.RemoveEntity(dataFromDb);
+            unitOfWork.Organization.RemoveEntity(dataFromDb);
             unitOfWork.Save();
             return Json(new { success = true, message = "Delete Successful" });
         }

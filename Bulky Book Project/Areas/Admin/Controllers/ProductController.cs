@@ -38,12 +38,12 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
             ProductVM productVM = new ProductVM()
             {
                 Product = new Product(),
-                CategoryList = unitOfWork.category.GetAll().Select(i => new SelectListItem()
+                CategoryList = unitOfWork.Category.GetAll().Select(i => new SelectListItem()
                 {
                     Text = i.CategoryName,
                     Value = i.CategoryId.ToString()
                 }),
-                CoverTypeList = unitOfWork.coverType.GetAll().Select(i => new SelectListItem()
+                CoverTypeList = unitOfWork.CoverType.GetAll().Select(i => new SelectListItem()
                 {
                     Text = i.CoverTypeName,
                     Value = i.CoverTypeId.ToString()
@@ -53,7 +53,7 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
             {
                 return View(productVM);
             }
-            productVM.Product = unitOfWork.product.Get(id.GetValueOrDefault());
+            productVM.Product = unitOfWork.Product.Get(id.GetValueOrDefault());
             if (productVM.Product == null)
             {
                 return NotFound();
@@ -65,10 +65,10 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAllProducts()
         {
-            var result = unitOfWork.product.GetAll(/*includeProperties: "Category,CoverType"*/);
-            List<Product> product = unitOfWork.product.GetAll().ToList();
-            List<Category> category = unitOfWork.category.GetAll().ToList();
-            List<CoverType> coverType = unitOfWork.coverType.GetAll().ToList();
+            var result = unitOfWork.Product.GetAll(includeProperties: "Category,CoverType");
+            List<Product> product = unitOfWork.Product.GetAll().ToList();
+            List<Category> category = unitOfWork.Category.GetAll().ToList();
+            List<CoverType> coverType = unitOfWork.CoverType.GetAll().ToList();
 
             var productData = from p in product
                               join c in category on p.CategoryId equals c.CategoryId into table1
@@ -125,18 +125,18 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
                 {
                     if (productVM.Product.ProductID != 0)
                     {
-                        Product productFromDb = unitOfWork.product.Get(productVM.Product.ProductID);
+                        Product productFromDb = unitOfWork.Product.Get(productVM.Product.ProductID);
                         productVM.Product.ImageURL = productFromDb.ImageURL;
                     }
                 }
                 if (productVM.Product.ProductID != 0)
                 {
                     param.Add("@id", productVM.Product.ProductID);
-                    unitOfWork.product.Update(productVM.Product);
+                    unitOfWork.Product.Update(productVM.Product);
                 }
                 else
                 {
-                    unitOfWork.product.Add(productVM.Product);
+                    unitOfWork.Product.Add(productVM.Product);
                 }
                 unitOfWork.Save();
                 return RedirectToAction(nameof(Index));
@@ -144,12 +144,12 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
             else
             {
                 //Validates server side when model state is invalid
-                productVM.CategoryList = unitOfWork.category.GetAll().Select(i => new SelectListItem()
+                productVM.CategoryList = unitOfWork.Category.GetAll().Select(i => new SelectListItem()
                 {
                     Text = i.CategoryName,
                     Value = i.CategoryId.ToString()
                 });
-                productVM.CoverTypeList = unitOfWork.coverType.GetAll().Select(i => new SelectListItem()
+                productVM.CoverTypeList = unitOfWork.CoverType.GetAll().Select(i => new SelectListItem()
                 {
                     Text = i.CoverTypeName,
                     Value = i.CoverTypeId.ToString()
@@ -163,7 +163,7 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
         public IActionResult DeleteProduct(int id)
         {
           
-            Product resultFromDb = unitOfWork.product.Get(id);
+            Product resultFromDb = unitOfWork.Product.Get(id);
             if (resultFromDb == null)
             {
                 return Json(new { success = false, message = "Unable to Delete Product" });
@@ -177,7 +177,7 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
                     System.IO.File.Delete(imagePath);
                 }
             }
-            unitOfWork.product.Remove(resultFromDb.ProductID);
+            unitOfWork.Product.Remove(resultFromDb.ProductID);
             unitOfWork.Save();
             return Json(new { success = true, message = "Delete Successfull" });
         }

@@ -34,7 +34,7 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
             {
                 return View(category);
             }
-            category = unitOfWork.category.GetFirstOrDefault(s => s.CategoryId == id);
+            category = unitOfWork.Category.GetFirstOrDefault(s => s.CategoryId == id);
             if (category == null)
             {
                 return NotFound();
@@ -46,7 +46,7 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAllCategories()
         {
-            var result = unitOfWork.category.GetAll();
+            var result = unitOfWork.Category.GetAll();
             return Json(new { data = result });
         }
 
@@ -58,11 +58,11 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
             {
                 if (category.CategoryId != 0)
                 {
-                    unitOfWork.category.Update(category);
+                    unitOfWork.Category.Update(category);
                 }
                 else
                 {
-                    unitOfWork.category.Add(category);
+                    unitOfWork.Category.Add(category);
                 }
                 unitOfWork.Save();
                 return RedirectToAction(nameof(Index));
@@ -74,12 +74,12 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
         [HttpDelete]
         public IActionResult DeleteCategory(int id)
         {
-            var dataFromDb = unitOfWork.category.Get(id);
+            var dataFromDb = unitOfWork.Category.Get(id);
             if (dataFromDb == null)
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
-            unitOfWork.category.RemoveEntity(dataFromDb);
+            unitOfWork.Category.RemoveEntity(dataFromDb);
             unitOfWork.Save();
             return Json(new { success = true, message = "Delete Successful" });
         }

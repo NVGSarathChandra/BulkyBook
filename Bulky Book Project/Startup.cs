@@ -66,6 +66,13 @@ namespace Bulky_Book_Project
                 options.ClientSecret = Configuration.GetValue<string>("Data:GoogleClientSecret");
             });
 
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,7 +96,7 @@ namespace Bulky_Book_Project
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -97,6 +104,8 @@ namespace Bulky_Book_Project
                     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            
         }
     }
 }

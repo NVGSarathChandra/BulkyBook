@@ -6,12 +6,19 @@ namespace DataAccess.IServiceContracts
 {
     public interface IUnitOfWork : IDisposable
     {
-        ICategory category { get; }
-        IStoredProcedureCall storedProcedureCall { get; }
-        ICoverType coverType { get; }
-        IProduct product { get; }
-        IOrganization organization { get; }
-        IApplicationUser applicationUser { get; }
+        ICategory Category { get; }
+        IStoredProcedureCall StoredProcedureCall { get; }
+        ICoverType CoverType { get; }
+        IProduct Product { get; }
+        IOrganization Organization { get; }
+        IApplicationUser ApplicationUser { get; }
+        IOrderHeader OrderHeader { get; }
+        IOrderDetails OrderDetails { get; }
+        IShoppingCart ShoppingCart { get; }
+
+
+
+
         void Save();
     }
 }

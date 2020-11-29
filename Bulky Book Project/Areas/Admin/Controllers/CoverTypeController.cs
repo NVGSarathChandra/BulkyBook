@@ -39,7 +39,7 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
                 return View(coverType);
             }
             parameters.Add("@id", coverType.CoverTypeId);
-            coverType = unitOfWork.storedProcedureCall.singleRecord<CoverType>(StaticDetails.SP_DELETECOVERTYPE, parameters);
+            coverType = unitOfWork.StoredProcedureCall.singleRecord<CoverType>(StaticDetails.SP_DELETECOVERTYPE, parameters);
             if (coverType == null)
             {
                 return NotFound();
@@ -56,7 +56,7 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAllCoverTypes()
         {
-            var coverType = unitOfWork.storedProcedureCall.RetrievTable<CoverType>(StaticDetails.SP_GETALLCOVERTYPES, null);
+            var coverType = unitOfWork.StoredProcedureCall.RetrievTable<CoverType>(StaticDetails.SP_GETALLCOVERTYPES, null);
             return Json(new { data = coverType });
 
         }
@@ -70,12 +70,12 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
                 var parameters = new DynamicParameters();
                 if (coverType.CoverTypeId != 0)
                 {
-                    unitOfWork.storedProcedureCall.Execute(StaticDetails.SP_UPDATECOVERTYPE, parameters);
+                    unitOfWork.StoredProcedureCall.Execute(StaticDetails.SP_UPDATECOVERTYPE, parameters);
                 }
                 else
                 {
                     parameters.Add("@name", coverType.CoverTypeName);
-                    unitOfWork.storedProcedureCall.Execute(StaticDetails.SP_INSERTCOVERTYPE, parameters);
+                    unitOfWork.StoredProcedureCall.Execute(StaticDetails.SP_INSERTCOVERTYPE, parameters);
                 }
                 unitOfWork.Save();
                 return RedirectToAction(nameof(Index));
@@ -92,12 +92,12 @@ namespace Bulky_Book_Project.Areas.Admin.Controllers
         {
             var parameters = new DynamicParameters();
             parameters.Add("@id", id);
-            var dataFromDb = unitOfWork.storedProcedureCall.singleRecord<CoverType>(StaticDetails.SP_GETCOVERTYPE, parameters);
+            var dataFromDb = unitOfWork.StoredProcedureCall.singleRecord<CoverType>(StaticDetails.SP_GETCOVERTYPE, parameters);
             if (dataFromDb == null)
             {
                 return Json(new { success = false, message = "Unable to Delete Cover Type" });
             }
-            unitOfWork.storedProcedureCall.Execute(StaticDetails.SP_DELETECOVERTYPE, parameters);
+            unitOfWork.StoredProcedureCall.Execute(StaticDetails.SP_DELETECOVERTYPE, parameters);
             unitOfWork.Save();
             return Json(new { success = true, message = "Delete Successfull" });
         }

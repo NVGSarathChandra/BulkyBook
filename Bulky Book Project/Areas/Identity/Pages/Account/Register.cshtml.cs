@@ -88,7 +88,7 @@ namespace Bulky_Book_Project.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             Input = new InputModel()
             {
-                OrganizationList = unitOfWork.organization.GetAll().Select(i => new SelectListItem()
+                OrganizationList = unitOfWork.Organization.GetAll().Select(i => new SelectListItem()
                 {
                     Text = i.OrganizationName,
                     Value = i.OrganizationId.ToString()
@@ -193,6 +193,19 @@ namespace Bulky_Book_Project.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+            Input = new InputModel()
+            {
+                OrganizationList = unitOfWork.Organization.GetAll().Select(i => new SelectListItem()
+                {
+                    Text = i.OrganizationName,
+                    Value = i.OrganizationId.ToString()
+                }),
+                RoleList = roleManager.Roles.Where(u => u.Name != StaticDetails.IndividualCustomerRole).Select(i => new SelectListItem()
+                {
+                    Text = i.Name,
+                    Value = i.Name.ToString()
+                })
+            };
 
             // If we got this far, something failed, redisplay form
             return Page();

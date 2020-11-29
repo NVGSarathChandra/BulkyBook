@@ -10,26 +10,32 @@ namespace DataAccess.Repositories
     {
         private readonly ApplicationDbContext dbContext;
 
-        public ICategory category { get; private set; }
+        public ICategory Category { get; private set; }
+        public IStoredProcedureCall StoredProcedureCall { get; private set; }
 
-        public IStoredProcedureCall storedProcedureCall { get; private set; }
+        public ICoverType CoverType { get; private set; }
+        public IProduct Product { get; private set; }
 
-        public ICoverType coverType { get; private set; }
-        public IProduct product { get; private set; }
+        public IOrganization Organization { get; set; }
+        public IApplicationUser ApplicationUser { get; set; }
+        public IShoppingCart ShoppingCart { get; set; }
+        public IOrderDetails OrderDetails { get; set; }
+        public IOrderHeader OrderHeader { get; set; }
 
-        public IOrganization organization { get; set; }
-        public IApplicationUser applicationUser { get; set; }
-
+        
 
         public UnitOfWorkRepository(ApplicationDbContext _dbContext)
         {
             this.dbContext = _dbContext;
-            category = new CategoryRepository(dbContext);
-            storedProcedureCall = new StoredProcedureCallRepository(dbContext);
-            coverType = new CoverTypeRepository(dbContext);
-            product = new ProductRepository(dbContext);
-            organization = new OrganizationRepository(dbContext);
-            applicationUser = new ApplicationUserRepository(dbContext);
+            Category = new CategoryRepository(dbContext);
+            StoredProcedureCall = new StoredProcedureCallRepository(dbContext);
+            CoverType = new CoverTypeRepository(dbContext);
+            Product = new ProductRepository(dbContext);
+            Organization = new OrganizationRepository(dbContext);
+            ApplicationUser = new ApplicationUserRepository(dbContext);
+            ShoppingCart = new ShoppingCartRepository(dbContext);
+            OrderDetails = new OrderDetailsRepository(dbContext);
+            OrderHeader = new OrderHeaderRepository(dbContext);
         }
 
         public void Dispose()

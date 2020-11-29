@@ -12,6 +12,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Utilities;
+using DataAccess.IServiceContracts;
+using Microsoft.AspNetCore.Http;
+using Bulky_Book_Project.Dataaccess.data;
+using Models;
 
 namespace Bulky_Book_Project.Areas.Identity.Pages.Account
 {
@@ -22,14 +26,16 @@ namespace Bulky_Book_Project.Areas.Identity.Pages.Account
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly IEmailSender emailSender;
-        public LoginModel(SignInManager<IdentityUser> signInManager, 
+        private readonly IUnitOfWork unitofwork;
+        public LoginModel(SignInManager<IdentityUser> signInManager,
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager, IEmailSender _emailSender)
+            UserManager<IdentityUser> userManager, IEmailSender _emailSender, IUnitOfWork _unitOfWork)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             emailSender = _emailSender;
+            unitofwork = _unitOfWork;
         }
 
         [BindProperty]
@@ -81,9 +87,19 @@ namespace Bulky_Book_Project.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var user = unitofwork.ApplicationUser.GetFirstOrDefault(u => u.Email == Input.Email, includeProperties: "Organization");
+
+                var checkPasswordSignInAsync = await _signInManager.CheckPasswordSignInAsync(user, Input.Password, lockoutOnFailure: false);
+
+                var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    int cartItemCount = 0;
+                    if (user != null)
+                    {
+                        cartItemCount = unitofwork.ShoppingCart.GetAll(u => u.ApplicatinUserId == user.Id).Count();
+                        HttpContext.Session.SetObject(StaticDetails.SessionShoppingCart, cartItemCount);
+                    }
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
